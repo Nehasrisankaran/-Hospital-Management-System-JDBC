@@ -1,0 +1,138 @@
+package jdbc;
+import java.sql.*;
+import java.util.Scanner;
+class  db{//patients (id,name,age,disease,cntct,addate),doctors(id,name,specilis,availabili,cntct),aptm(apid,pid,docid,dt,tim,stts)
+	void database()throws SQLException{
+		String url="jdbc:mysql://localhost:3306/";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="create database HospitalManagementSystem";
+			Statement st=con.createStatement();
+			System.out.println(st.executeUpdate(query));}
+	void patients()throws SQLException {
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="create table patients(ID int,Name varchar(10),Age int,disease varchar(50),contact int,admission_date varchar(50))";
+			Statement st=con.createStatement();
+			System.out.println(st.executeUpdate(query));}
+	
+	void inpatient()throws SQLException {
+		Scanner oj=new Scanner(System.in);
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="insert into patients values(?,?,?,?,?,?)";
+			int ID=oj.nextInt();
+			String Name=oj.next();
+		    int Age=oj.nextInt();
+			String disease=oj.next();
+			int contact=oj.nextInt();
+			String admission_date=oj.next();
+			PreparedStatement ps=con.prepareStatement(query);
+			ps.setInt(1, ID);
+			ps.setString(2,Name);
+			ps.setInt(3,Age);
+			ps.setString(4,disease);
+			ps.setInt(5,contact);
+			ps.setString(6,admission_date);
+			oj.close();
+			System.out.println(ps.executeUpdate());}
+	void Doctors()throws SQLException {
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="create table Doctors(doc_ID int,Name varchar(10),Age int,availability varchar(50),contact int,specialization varchar(50))";
+			Statement st=con.createStatement();
+			System.out.println(st.executeUpdate(query));
+			}
+	void indoc()throws SQLException {
+		Scanner oj=new Scanner(System.in);
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="insert into Doctors values(?,?,?,?,?,?)";
+			int doc_ID=oj.nextInt();
+			String Name=oj.next();
+		    int Age=oj.nextInt();
+			String availability=oj.next();
+			int contact=oj.nextInt();
+			String specialisation=oj.next();
+			PreparedStatement ps=con.prepareStatement(query);
+			ps.setInt(1,doc_ID);
+			ps.setString(2,Name);
+			ps.setInt(3,Age);
+			ps.setString(4,availability);
+			ps.setInt(5,contact);
+			ps.setString(6,specialisation);
+			oj.close();
+			System.out.println(ps.executeUpdate());
+			}
+	void appointments()throws SQLException {
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="create table appointments(ID int,apt_ID int,doc_ID int,date varchar(50),time varchar(20),status varchar(50))";
+			Statement st=con.createStatement();
+			System.out.println(st.executeUpdate(query));
+			}
+	void inappointments()throws SQLException {
+		Scanner oj=new Scanner(System.in);
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="insert into appointments values(?,?,?,?,?,?)";
+			int ID=oj.nextInt();
+			int apt_ID=oj.nextInt();
+			int doc_ID=oj.nextInt();
+			String date=oj.next();
+			String time=oj.next();
+			String status=oj.next();
+			PreparedStatement ps=con.prepareStatement(query);
+			ps.setInt(1, ID);
+			ps.setInt(2,apt_ID);
+			ps.setInt(3,doc_ID);
+			ps.setString(4,date);
+			ps.setString(5,time);
+			ps.setString(6,status);
+			oj.close();
+			System.out.println(ps.executeUpdate()); 
+			}
+void del_tbl()throws SQLException {
+		String url="jdbc:mysql://localhost:3306/HospitalManagementSystem";
+		String un="root";
+		String pw="Neha@123sql@";
+			Connection con=DriverManager.getConnection(url,un,pw);
+			String query="delete from patients where ID=21";
+			Statement st=con.createStatement();
+			st.executeUpdate(query);}
+
+void display()throws SQLException{
+	String url="jdbc:mysql://localhost:3306/HospitalManagementsystem";
+	String un="root";
+	String pw="Neha@123sql@";
+		Connection con=DriverManager.getConnection(url,un,pw);
+		String query="select *from patients";
+		Statement st=con.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next()) {
+			System.out.print(" "+rs.getInt(1));
+			System.out.print(" "+rs.getString(2));
+			System.out.print(" "+rs.getString(3));
+			System.out.print(" "+rs.getString(4));
+			System.out.print(" "+rs.getString(5));
+			System.out.println( );
+		}}}
+class busmgmt{
+	public static void main(String...h)throws SQLException{
+		db d1=new db();
+		d1.inappointments();
+	}
+}
